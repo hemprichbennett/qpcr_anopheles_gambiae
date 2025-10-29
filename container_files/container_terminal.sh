@@ -1,0 +1,1 @@
+docker run -i -t -v ./:/home/qpcr_anopheles_gambiae hemprichbennett/qpcr_ag_img:2025-10-29 bash
