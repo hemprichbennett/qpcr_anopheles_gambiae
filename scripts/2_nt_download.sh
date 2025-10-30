@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=nt_download # the name for the cluster scheduler
-#SBATCH --time=05:00:00 # Maximum allowed runtime per iteration
+#SBATCH --time=24:00:00 # Maximum allowed runtime per iteration
 #SBATCH --mem-per-cpu=80G
 #SBATCH --output=logfiles/nt_download.out # the name of the output files
 #SBATCH --mail-type=ALL
