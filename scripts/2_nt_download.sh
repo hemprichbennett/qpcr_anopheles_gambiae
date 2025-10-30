@@ -11,5 +11,9 @@ module purge
 
 export SINGULARITY_CACHEDIR=$DATA/sif_lib/
 
+cd $DATA/BLAST_nt_db
 
-singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest bash /home/zool2291/projects/qpcr_anopheles_gambiae/scripts/2_nt_data_download.sh
+singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest perl update_blastdb.pl --decompress nt
+
+
+
