@@ -26,8 +26,9 @@ full_primer_combinations %>%
 for(p in 1:nrow(full_primer_combinations)){
   f_primer <- full_primer_combinations$f_primer[p]
   r_primer <- full_primer_combinations$r_primer[p]
-  cat(file = paste0('data/primer_pairs/', p, '.fasta'), 
-                    '>f\n',
+  cat(file = paste0('data/primer_pairs/', p, '.fasta'),
+      sep = '',
+  '>f\n',
   f_primer, '\n',
   '>r\n',
   r_primer, '\n')
