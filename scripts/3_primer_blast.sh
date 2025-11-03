@@ -12,7 +12,7 @@ module purge
 
 export SINGULARITY_CACHEDIR=$DATA/sif_lib/
 
-primers=$(cat data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta)
+primers=data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta
 
 echo primers are ${primers}
 
