@@ -22,3 +22,15 @@ full_primer_combinations %>%
   select(f_primer, r_primer) %>%
   write_csv(., file = 'data/processed_data/primer_combinations_for_bioinformatics.csv',
             col_names = F)
+
+for(p in 1:nrow(full_primer_combinations)){
+  print(p)
+  cat('f_primer is', full_primer_combinations$f_primer[p], '\n')
+  cat('r_primer is', full_primer_combinations$r_primer[p], '\n')
+  sink(file = paste0('data/primer_pairs/', p, '.fasta'))
+  print('>f')
+  print(f_primer)
+  print('>r')
+  print(r_primer)
+  sink()
+}
