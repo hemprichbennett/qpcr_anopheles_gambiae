@@ -14,6 +14,7 @@ export SINGULARITY_CACHEDIR=$DATA/sif_lib/
 
 primers=$(cat data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta)
 
+cat primers are ${primers}
 
 export BLASTDB=$DATA/BLAST_nt_db
 
