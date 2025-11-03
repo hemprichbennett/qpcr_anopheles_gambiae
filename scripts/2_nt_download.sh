@@ -25,4 +25,4 @@ singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zoo
 
 # tar -zxvf taxdb.tar.gz
 
-tar -xvzf *tar.gz
+ls *.gz |xargs -n1 tar -xzf
