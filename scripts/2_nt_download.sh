@@ -13,7 +13,12 @@ export SINGULARITY_CACHEDIR=$DATA/sif_lib/
 
 cd $DATA/BLAST_nt_db
 
+
+# download the overall nt database
 singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest update_blastdb.pl --decompress nt
 
+#download taxonomy
+singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest update_blastdb.pl taxdb
 
+tar -zxvf taxdb.tar.gz
 
