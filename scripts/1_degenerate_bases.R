@@ -24,13 +24,12 @@ full_primer_combinations %>%
             col_names = F)
 
 for(p in 1:nrow(full_primer_combinations)){
-  print(p)
-  cat('f_primer is', full_primer_combinations$f_primer[p], '\n')
-  cat('r_primer is', full_primer_combinations$r_primer[p], '\n')
-  sink(file = paste0('data/primer_pairs/', p, '.fasta'))
-  print('>f')
-  print(f_primer)
-  print('>r')
-  print(r_primer)
-  sink()
+  f_primer <- full_primer_combinations$f_primer[p]
+  r_primer <- full_primer_combinations$r_primer[p]
+  cat(file = paste0('data/primer_pairs/', p, '.fasta'), 
+                    '>f\n',
+  f_primer, '\n',
+  '>r\n',
+  r_primer, '\n')
+  
 }
