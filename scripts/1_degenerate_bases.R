@@ -17,3 +17,8 @@ full_primer_combinations <- possible_combinations %>%
                            'GG', p2_degen_4, 'CTATAAGTT'))
 
 write_csv(full_primer_combinations, 'data/processed_data/degenerate_base_combinations.csv')
+
+full_primer_combinations %>%
+  select(f_primer, r_primer) %>%
+  write_csv(., file = 'data/processed_data/primer_combinations_for_bioinformatics.csv',
+            col_names = F)
