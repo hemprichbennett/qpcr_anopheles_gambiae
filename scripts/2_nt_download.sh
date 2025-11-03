@@ -21,7 +21,7 @@ singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zoo
 singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest update_blastdb.pl taxdb
 
 # makeblastdb with downloaded files
-singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest makeblastdb -in . -dbtype nucl -out taxdb
+singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest makeblastdb -in $DATA/BLAST_nt_db -dbtype nucl -out taxdb
 
 tar -zxvf taxdb.tar.gz
 
