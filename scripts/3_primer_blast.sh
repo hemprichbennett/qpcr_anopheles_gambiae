@@ -9,6 +9,7 @@
 #SBATCH --mail-user=david.hemprich-bennett@biology.ox.ac.uk
 
 module purge
+module load BLAST
 
 export SINGULARITY_CACHEDIR=$DATA/sif_lib/
 
@@ -16,13 +17,13 @@ primers=data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta
 
 echo primers are ${primers}
 
-# export BLASTDB=$DATA/BLAST_nt_db
+export BLASTDB=$DATA/BLAST_nt_db/nt
 
-singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest\
- blastn -num_threads 34 \
+# singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest\
+blastn -num_threads 34 \
  -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt \
  -query ${primers} \
- -out data/blast_outputs/${SLURM_ARRAY_TASK_ID} \
+ -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID} \
  -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids sscinames scomnames"
 
 
