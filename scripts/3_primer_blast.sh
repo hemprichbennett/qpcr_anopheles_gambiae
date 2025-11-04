@@ -23,7 +23,7 @@ export BLASTDB=$DATA/BLAST_nt_db/nt
 blastn -num_threads 34 \
  -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt \
  -query ${primers} \
- -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID} \
+ -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.txt \
  -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids sscinames scomnames"
 
 
