@@ -18,6 +18,7 @@ primers=data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta
 echo primers are ${primers}
 
 export BLASTDB=$DATA/BLAST_nt_db/nt
+export BLASTDB_TAXDB=$DATA/BLAST_nt_db/taxdb
 
 # singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest\
 blastn -num_threads 34 \
