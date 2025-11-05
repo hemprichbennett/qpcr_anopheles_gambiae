@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=primer_blast # the name for the cluster scheduler
-#SBATCH --time=05:00:00 # Maximum allowed runtime per iteration
+#SBATCH --time=50:00:00 # Maximum allowed runtime per iteration
 #SBATCH --mem-per-cpu=80G
 #SBATCH --array=1-96 # the number of iterations
 #SBATCH --output=logfiles/primer_blast_%A_%a.out # the name of the output files
