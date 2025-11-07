@@ -9,7 +9,7 @@
 #SBATCH --mail-user=david.hemprich-bennett@biology.ox.ac.uk
 
 module purge
-module load BLAST
+module load BLAST+
 
 export SINGULARITY_CACHEDIR=$DATA/sif_lib/
 
@@ -18,9 +18,10 @@ primers=data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta
 echo primers are ${primers}
 
 export BLASTDB=$DATA/BLAST_nt_db/nt
-export BLASTDB_TAXDB=$DATA/BLAST_nt_db/taxdb
+export BLASTDB_TAXDB=$DATA/BLAST_taxonomy_db
+export BLAST_TAXDB=$DATA/BLAST_taxonomy_db
 
-# singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest\
+
 blastn -num_threads 34 \
  -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt \
  -query ${primers} \
