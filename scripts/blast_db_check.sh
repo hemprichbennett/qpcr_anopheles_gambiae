@@ -10,3 +10,4 @@
 module load blast
 
 blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt
+blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb
