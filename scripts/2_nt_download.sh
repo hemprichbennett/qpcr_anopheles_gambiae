@@ -17,12 +17,24 @@ cd $DATA/BLAST_nt_db
 # download the overall nt database
 singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest update_blastdb.pl --decompress nt
 
+ls *.gz |xargs -n1 
+for file in *.gz; do
+  echo "Processing $file..."
+  tar -xzf $file
+  echo "Finished unzipping $file"
+done
+
 CD $DATA/BLAST_taxonomy_db
 #download taxonomy
 singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db:/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db docker://ncbi/blast:latest update_blastdb.pl taxdb
 
 
-
+ls *.gz |xargs -n1 
+for file in *.gz; do
+  echo "Processing $file..."
+  tar -xzf $file
+  echo "Finished unzipping $file"
+done
 
 
 # # makeblastdb with downloaded files
@@ -30,9 +42,9 @@ singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zoo
 
 # tar -zxvf taxdb.tar.gz
 
-# ls *.gz |xargs -n1 
-# for file in *.gz; do
-#   echo "Processing $file..."
-#   tar -xzf $file
-#   echo "Finished unzipping $file"
-# done
+ls *.gz |xargs -n1 
+for file in *.gz; do
+  echo "Processing $file..."
+  tar -xzf $file
+  echo "Finished unzipping $file"
+done
