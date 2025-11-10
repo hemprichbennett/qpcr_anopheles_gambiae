@@ -24,7 +24,7 @@ for file in *.gz; do
   echo "Finished unzipping $file"
 done
 
-CD $DATA/BLAST_taxonomy_db
+cd $DATA/BLAST_taxonomy_db
 #download taxonomy
 singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db:/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db docker://ncbi/blast:latest update_blastdb.pl taxdb
 
