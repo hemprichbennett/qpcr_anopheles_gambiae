@@ -7,7 +7,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=david.hemprich-bennett@biology.ox.ac.uk
 
-module load BLAST
+module load BLAST+
 
 export BLASTDB=$DATA/BLAST_nt_db/nt
 export BLASTDB_TAXDB=$DATA/BLAST_taxonomy_db/taxdb
