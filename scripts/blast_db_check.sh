@@ -9,5 +9,9 @@
 
 module load BLAST
 
+export BLASTDB=$DATA/BLAST_nt_db/nt
+export BLASTDB_TAXDB=$DATA/BLAST_taxonomy_db
+export BLAST_TAXDB=$DATA/BLAST_taxonomy_db
+
 blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt
 blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb
