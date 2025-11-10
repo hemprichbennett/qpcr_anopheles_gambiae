@@ -9,9 +9,16 @@
 
 module load BLAST+
 
-export BLASTDB=$DATA/BLAST_nt_db/nt
-export BLASTDB_TAXDB=$DATA/BLAST_taxonomy_db/taxdb
-export BLAST_TAXDB=$DATA/BLAST_taxonomy_db/taxdb
+echo "ENV:"
+echo "BLASTDB='$BLASTDB'"
+echo "BLASTDB_TAXDB='$BLASTDB_TAXDB'"
+echo "BLAST_TAXDB='$BLAST_TAXDB'"
 
-blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt
-blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb 2>&1 | sed -n '1,120p'
+echo "LIST nt dir:"
+ls -l /data/zool-mosquito_ecology/zool2291/BLAST_nt_db | sed -n '1,200p'
+
+echo "LIST taxdb dir:"
+ls -l /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db | sed -n '1,200p'
+
+echo "BLAST check (nt):"
+blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt 2>&1 | sed -n '1,200p'
