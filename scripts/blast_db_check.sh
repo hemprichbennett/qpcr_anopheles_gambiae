@@ -7,7 +7,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=david.hemprich-bennett@biology.ox.ac.uk
 
-module load blast
+module load BLAST
 
 blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt
 blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb
