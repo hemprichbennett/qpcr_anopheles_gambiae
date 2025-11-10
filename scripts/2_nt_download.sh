@@ -24,27 +24,20 @@ for file in *.gz; do
   echo "Finished unzipping $file"
 done
 
-cd $DATA/BLAST_taxonomy_db
-#download taxonomy
-singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db:/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db docker://ncbi/blast:latest update_blastdb.pl taxdb
+module load BLAST+
+which update_blastdb.pl
+update_blastdb.pl --version
+blastn -version
 
+cd /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
+# download the taxonomy database
 
-ls *.gz |xargs -n1 
-for file in *.gz; do
-  echo "Processing $file..."
-  tar -xzf $file
-  echo "Finished unzipping $file"
-done
+update_blastdb.pl --verbose --decompress taxdb
+# confirm expected files are present and non-zero sized
+ls -lh /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb.* \
+       /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxonomy4blast.sqlite3
 
-
-# # makeblastdb with downloaded files
-# singularity exec --bind /home/zool2291/projects/qpcr_anopheles_gambiae:/home/zool2291/projects/qpcr_anopheles_gambiae,/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_nt_db docker://ncbi/blast:latest makeblastdb -in $DATA/BLAST_nt_db -dbtype nucl -out taxdb
-
-# tar -zxvf taxdb.tar.gz
-
-ls *.gz |xargs -n1 
-for file in *.gz; do
-  echo "Processing $file..."
-  tar -xzf $file
-  echo "Finished unzipping $file"
-done
+# copy taxonomy db files to nt db folder for BLAST to find them
+cp -v /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb.* \
+      /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/
+chmod a+r /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/taxdb.* || true
