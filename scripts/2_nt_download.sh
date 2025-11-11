@@ -41,3 +41,5 @@ ls -lh /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb.* \
 cp -v /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb.* \
       /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/
 chmod a+r /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/taxdb.* || true
+
+blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/taxdb 2>&1 | sed -n '1,120p'
