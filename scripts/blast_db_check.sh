@@ -9,14 +9,11 @@
 
 module load BLAST+
 
-export BLASTDB="/data/zool-mosquito_ecology/zool2291/BLAST_nt_db:/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db"
+export BLASTDB=/data/zool-mosquito_ecology/zool2291/BLAST_nt_db
 export BLASTDB_TAXDB=/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
 export BLAST_TAXDB=/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
+env | egrep 'BLASTDB|BLASTDB_TAXDB|BLAST_TAXDB'
 
-# verify environment
-echo "BLASTDB='$BLASTDB'"
-echo "BLASTDB_TAXDB='$BLASTDB_TAXDB'"
-
-# now test
-blastdbcmd -info -db nt            # should print nt info (as before)
-blastdbcmd -info -db taxdb         # should now print taxdb info (no error)
+blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb 2>&1 | sed -n '1,120p'
+# and also:
+blastdbcmd -info -db /data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db/taxdb.bti 2>&1 | sed -n '1,120p' || true
