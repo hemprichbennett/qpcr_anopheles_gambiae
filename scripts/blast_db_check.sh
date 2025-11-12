@@ -7,8 +7,6 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=david.hemprich-bennett@biology.ox.ac.uk
 
-module load BLAST+
-
 # in your sbatch script or interactive shell
 export BLASTDB=/data/zool-mosquito_ecology/zool2291/BLAST_nt_db
 export BLASTDB_TAXDB=/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
