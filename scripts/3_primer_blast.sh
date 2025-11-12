@@ -17,13 +17,12 @@ primers=data/primer_pairs/${SLURM_ARRAY_TASK_ID}.fasta
 
 echo primers are ${primers}
 
-export BLASTDB=$DATA/BLAST_nt_db/nt
-export BLASTDB_TAXDB=$DATA/BLAST_taxonomy_db
-export BLAST_TAXDB=$DATA/BLAST_taxonomy_db
+export BLASTDB=/data/zool-mosquito_ecology/zool2291/BLAST_nt_db
+export BLASTDB_TAXDB=/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
 
 
 blastn -num_threads 34 \
- -db /data/zool-mosquito_ecology/zool2291/BLAST_nt_db/nt \
+ -db nt \
  -query ${primers} \
  -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.txt \
  -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids sscinames scomnames"
