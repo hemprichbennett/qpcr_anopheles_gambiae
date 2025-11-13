@@ -5,7 +5,7 @@
 #SBATCH --mem-per-cpu=80G
 #SBATCH --array=1-96 # the number of iterations
 #SBATCH --output=logfiles/primer_blast_%A_%a.out # the name of the output files
-#SBATCH --cpus-per-task=34
+#SBATCH --cpus-per-task=10
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=david.hemprich-bennett@biology.ox.ac.uk
 
