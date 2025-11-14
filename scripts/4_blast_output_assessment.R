@@ -38,6 +38,14 @@ for(i in 1:length(all_results)){
 # combine the data
 full_results_long <- bind_rows(all_results)
 
+# temp diagnostics
+
+full_results_long <- full_results_long %>%
+  mutate(anopheles = grepl('Anopheles', sscinames))
+ggplot(full_results_long, aes(pident))+
+  geom_freqpoly()+
+  facet_wrap(.~ anopheles)
+
 # make a tibble of just taxonomic information, to be used later after 
 # rearranging the data
 taxonomy <- full_results_long %>%
