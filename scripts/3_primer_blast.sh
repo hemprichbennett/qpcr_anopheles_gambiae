@@ -31,7 +31,6 @@ blastn -num_threads ${SLURM_CPUS_PER_TASK} \
  -soft_masking false \
  -max_hsps 1 \
  -query "${primers}" \
- -max_target_seqs 5000 \
  -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.tsv \
  -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids sscinames scomnames" \
  2> /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.err || true
