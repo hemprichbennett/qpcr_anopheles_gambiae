@@ -13,7 +13,7 @@ possible_combinations <- expand_grid(
 
 full_primer_combinations <- possible_combinations %>%
   mutate(f_primer = paste0('GCTATACT',p1_degen_1, 'GCAATTGG', p1_degen_2, 'TTAC'),
-         r_primer = paste0(p2_degen_1, 'A', p2_degen_2, 'TATAG', p2_degen_3,
+         r_primer = paste0(p2_degen_1, 'A', p2_degen_2, 'TATAGC', p2_degen_3,
                            'GG', p2_degen_4, 'CTATAAGTT'))
 
 write_csv(full_primer_combinations, 'data/processed_data/degenerate_base_combinations.csv')
