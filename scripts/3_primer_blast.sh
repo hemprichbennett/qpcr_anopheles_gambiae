@@ -25,8 +25,13 @@ export BLASTDB_TAXDB=/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
 blastn -num_threads ${SLURM_CPUS_PER_TASK} \
  -task blastn-short -word_size 7 -evalue 1000 \
  -db nt \
+ -evalue 1000 \
+ -word_size 7 \
+ -dust no \
+ -soft_masking false \
+ -max_hsps 1 \
  -query "${primers}" \
  -max_target_seqs 5000 \
- -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.txt \
+ -out /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.tsv \
  -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids sscinames scomnames" \
  2> /home/zool2291/projects/qpcr_anopheles_gambiae/data/blast_outputs/${SLURM_ARRAY_TASK_ID}.err || true
