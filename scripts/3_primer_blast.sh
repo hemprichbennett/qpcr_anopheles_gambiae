@@ -23,7 +23,7 @@ export BLASTDB_TAXDB=/data/zool-mosquito_ecology/zool2291/BLAST_taxonomy_db
 
 # run blastn optimized for short queries; capture both stdout and stderr
 blastn -num_threads ${SLURM_CPUS_PER_TASK} \
- -task blastn-short -word_size 7 -evalue 1000 \
+ -task blastn-short \
  -db nt \
  -evalue 1000 \
  -word_size 7 \
