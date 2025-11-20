@@ -29,7 +29,10 @@ for(i in 1:length(all_results)){
     # change the qseqid (currently just an 'f' or 'r' depending on which 
     # amplification is present in that row), for more descriptive use as a 
     # column name
-    mutate(qseqid = paste0(qseqid, '_primer'),amplified = T) 
+    mutate(qseqid = paste0(qseqid, '_primer'),amplified = T,
+           # make a column containing a unique identifier string for that 
+           # sequence and primer PAIR, for use in filtering later
+           match_uid = paste(sseqid, primer_pair)) 
 }
 
 # Now make a long tibble, to look at the scores etc of all of the BLAST 
@@ -55,7 +58,7 @@ for(i in 1:length(all_results)){
   wide_results_list[[i]] <- all_results[[i]] %>%
     # we currently have a row for every match, but what we care about is if a 
     # taxa matches BOTH primers for a given primer pair
-    select(primer_pair, qseqid, staxids,sseqid, amplified) %>%
+    select(primer_pair, sseqid, qseqid, staxids,sseqid, amplified, match_uid) %>%
     distinct() %>%
     pivot_wider(names_from = qseqid, values_from = amplified) %>%
     mutate(both_amplified = f_primer == T & r_primer == T)
@@ -68,9 +71,9 @@ wide_results_tib <- bind_rows(wide_results_list) %>%
 positive_results_tib <- wide_results_tib %>%
   filter(both_amplified == T)
 
-both_primers_matched <- positive_results_tib %>% 
-  group_by(sscinames) %>% 
-  summarise(nhits = n())
+# both_primers_matched <- positive_results_tib %>% 
+#   group_by(sscinames) %>% 
+#   summarise(nhits = n())
 
 
 
@@ -78,7 +81,22 @@ both_primers_matched <- positive_results_tib %>%
 
 # filter only for those where both primers matched
 long_matches_only <- full_results_long %>%
-  filter(sscinames %in% both_primers_matched$sscinames)
+  filter(match_uid %in% positive_results_tib$match_uid)
 
-non_anopheles_matches <- long_matches_only %>%
-  filter(anopheles == F)
+
+
+non_anopheles_match_list <- long_matches_only %>%
+  filter(anopheles == F) %>%
+  group_by(match_uid) %>%
+  # turn it into a list where each item is the rows containing the 
+  # remaining match_uids
+  group_split() %>%
+  # select desired columns for each of the list items
+  map(select,sseqid, qseqid, pident, staxids, sscinames, scomnames, primer_pair,
+             match_uid, length, mismatch, evalue) %>%
+  map(pivot_wider, names_from = qseqid, 
+      values_from = c(pident, length, mismatch, evalue)) %>%
+  # now combine all of those list items into a single dataframe
+  bind_rows()
+
+
