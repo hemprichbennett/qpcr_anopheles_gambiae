@@ -85,7 +85,7 @@ long_matches_only <- full_results_long %>%
 
 
 
-non_anopheles_match_list <- long_matches_only %>%
+non_anopheles_match_tib <- long_matches_only %>%
   filter(anopheles == F) %>%
   group_by(match_uid) %>%
   # turn it into a list where each item is the rows containing the 
@@ -93,10 +93,18 @@ non_anopheles_match_list <- long_matches_only %>%
   group_split() %>%
   # select desired columns for each of the list items
   map(select,sseqid, qseqid, pident, staxids, sscinames, scomnames, primer_pair,
-             match_uid, length, mismatch, evalue) %>%
+             match_uid, length, mismatch, evalue, sstart, send) %>%
   map(pivot_wider, names_from = qseqid, 
-      values_from = c(pident, length, mismatch, evalue)) %>%
+      values_from = c(pident, length, mismatch, evalue, sstart, send)) %>%
   # now combine all of those list items into a single dataframe
-  bind_rows()
+  bind_rows() %>%
+  mutate(amplicon_length =sstart_r_primer - send_f_primer )
 
+# given that our desired amplicon length for anopheles is 192bp, the amplicons 
+# created seem fine
+unique(non_anopheles_match_tib$amplicon_length)
 
+# and given that our primers are 22bp, there's also little issue with the 
+# lengths of the regions that actually 'matched' our primers
+non_anopheles_match_tib %>%
+  select(length_f_primer, length_r_primer)
