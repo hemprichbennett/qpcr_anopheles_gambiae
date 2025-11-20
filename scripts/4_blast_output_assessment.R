@@ -4,7 +4,7 @@ library(tidyverse)
 library(here)
 
 all_results <- list.files(path = here('data', 'blast_outputs'),
-                          pattern = '.txt',
+                          pattern = '.tsv',
                           full.names = T) %>%
   map(read_delim, 
          col_names = c("qseqid", "sseqid", "pident", "length", "mismatch", 
@@ -14,10 +14,7 @@ all_results <- list.files(path = here('data', 'blast_outputs'),
 #! Need to filter by scores etc, the presence of a sequence doesn't mean 
 # it had a good match for the binding site
 
-temp <- all_results[[1]]
-
 for(i in 1:length(all_results)){
-  
   all_results[[i]] <- all_results[[i]] %>%
     # there's a weird glitch where a low number of rows contain multiple taxa,
     # and so rather than having an integer staxid, they have two separated by a ;
@@ -35,16 +32,15 @@ for(i in 1:length(all_results)){
     mutate(qseqid = paste0(qseqid, '_primer'),amplified = T) 
 }
 
+# Now make a long tibble, to look at the scores etc of all of the BLAST 
+# 'matches' we got
+
 # combine the data
 full_results_long <- bind_rows(all_results)
 
-# temp diagnostics
 
 full_results_long <- full_results_long %>%
   mutate(anopheles = grepl('Anopheles', sscinames))
-ggplot(full_results_long, aes(pident))+
-  geom_freqpoly()+
-  facet_wrap(.~ anopheles)
 
 # make a tibble of just taxonomic information, to be used later after 
 # rearranging the data
@@ -71,3 +67,18 @@ wide_results_tib <- bind_rows(wide_results_list) %>%
 # make a tibble of only full amplifications
 positive_results_tib <- wide_results_tib %>%
   filter(both_amplified == T)
+
+both_primers_matched <- positive_results_tib %>% 
+  group_by(sscinames) %>% 
+  summarise(nhits = n())
+
+
+
+
+
+# filter only for those where both primers matched
+long_matches_only <- full_results_long %>%
+  filter(sscinames %in% both_primers_matched$sscinames)
+
+non_anopheles_matches <- long_matches_only %>%
+  filter(anopheles == F)
