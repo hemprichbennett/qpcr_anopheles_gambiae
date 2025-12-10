@@ -76,17 +76,26 @@ positive_results_tib <- wide_results_tib %>%
 #   summarise(nhits = n())
 
 
+unique_matches_tib <- positive_results_tib %>%
+  # the above contains duplicates where multiple primers matched. For summary 
+  # numbers, de-duplicate this
+  select(-primer_pair, -match_uid) %>%
+  distinct() %>%
+  # now summarise the remaining amplifications by species
+  group_by(sscinames) %>%
+  summarise(n_amplifications = n())
 
 
+# FIX THIS: the above includes low-quality 'matches' which wouldn't be viable
+# in-vitro, e.g. primer 'matches' of low numbers of bases etc
 
 # filter only for those where both primers matched
 long_matches_only <- full_results_long %>%
   filter(match_uid %in% positive_results_tib$match_uid)
 
 
-
-non_anopheles_match_tib <- long_matches_only %>%
-  filter(anopheles == F) %>%
+# make a wide tibble where each row is a pair of primers being returned by blast
+both_matching_tib <- long_matches_only %>%
   group_by(match_uid) %>%
   # turn it into a list where each item is the rows containing the 
   # remaining match_uids
@@ -100,6 +109,10 @@ non_anopheles_match_tib <- long_matches_only %>%
   bind_rows() %>%
   mutate(amplicon_length =sstart_r_primer - send_f_primer )
 
+# filter the above for non-anophelines
+non_anopheles_match_tib <- both_matching_tib %>%
+  filter(!grepl('Anopheles', sscinames))
+
 # given that our desired amplicon length for anopheles is 192bp, the amplicons 
 # created seem fine
 unique(non_anopheles_match_tib$amplicon_length)
@@ -108,3 +121,33 @@ unique(non_anopheles_match_tib$amplicon_length)
 # lengths of the regions that actually 'matched' our primers
 non_anopheles_match_tib %>%
   select(length_f_primer, length_r_primer)
+
+
+
+
+# Check quality of the Anopheles matches ----------------------------------
+
+anopheles_matches <- both_matching_tib %>%
+  # filter to retain only decent matches
+  filter(grepl('Anopheles', sscinames)) %>%
+  filter(length_f_primer > 20, 
+         length_r_primer > 20, 
+         amplicon_length > 150,
+         amplicon_length < 300) %>%
+  # make a column giving a score to the match, so we can determine which primer
+  # pair was best for a given template sequence
+  mutate(n_matching_bases = length_f_primer + length_r_primer,
+         sum_pident = pident_f_primer + pident_r_primer,
+         match_score = n_matching_bases * sum_pident) %>%
+  # make a quick list where every template sequence gets its own tibble
+  group_by(sseqid) %>%
+  group_split() %>%
+  # now filter to retain only the highest match_score per tibble
+  map(~ filter(.x, match_score == max(match_score))) %>%
+  # now combine it into a tibble again
+  bind_rows()
+
+# summary table of per-species matches
+anopheles_matches %>%
+  group_by(sscinames) %>%
+  count()
