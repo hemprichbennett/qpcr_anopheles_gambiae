@@ -1,0 +1,20 @@
+﻿sample_id,concentration,ct
+S-G304_PLS-1000c/μl,1000,28.75
+S-G304_PLS-500c/μl,500,30.33
+S-G304_PLS-100c/μl,100,33.52
+S-G304_PLS-50c/μl _replicate1,50,35.37
+S-G304_PLS-50c/μl_replicate2,50,35.01
+S-G304_PLS-50c/μl_replicate3,50,35.56
+S-G304_PLS-50c/μl _replicate4,50,34.36
+S-G304_PLS-25c/μl _replicate1,25,35.5
+S-G304_PLS-25c/μl _replicate2,25,35.41
+S-G304_PLS-25c/μl _replicate3,25,36.44
+S-G304_PLS-10c/μl _replicate1,10,NA
+S-G304_PLS-10c/μl _replicate2,10,NA
+S-G304_PLS-10c/μl _replicate3,10,35.61
+S-G304_PLS-10c/μl _replicate4,10,35.47
+S-G304_PLS-5c/μl _replicate1,5,NA
+S-G304_PLS-5c/μl _replicate2,5,37.41
+S-G304_PLS-5c/μl _replicate3,5,NA
+S-G304_PLS-5c/μl _replicate4,5,NA
+S-G304_PLS-2.5c/μl,2.5,NA
