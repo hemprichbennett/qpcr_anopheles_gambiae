@@ -8,3 +8,6 @@ logins/*
 results/*
 logfiles/*
 data/blast_outputs/*
+*.xlsx
+*.xls
+*.png
